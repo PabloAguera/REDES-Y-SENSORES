@@ -1,4 +1,3 @@
-```arduino
 // Requiere: PubSubClient, WiFi (ESP8266/ESP32)
 // Instalar desde Library Manager: "PubSubClient"
 
@@ -65,4 +64,3 @@ void loop() {
   // delay(10000);
   // mqtt.publish(topic, "Otro mensaje");
 }
-```
