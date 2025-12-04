@@ -2,7 +2,7 @@ import json
 import time
 import paho.mqtt.client as mqtt
 
-BROKER = "10.42.0.1"
+BROKER = "192.168.0.88"
 PORT = 1883
 TOPIC = "Enviromental Sensors Network"   # mismo topic usado en el sketch
 OWN_ID = "B8"                            # ID del sensor local (ajusta si hace falta)
