@@ -1,4 +1,8 @@
+#Ejecutar después de recogida_datos.py
+# streamlit run .\SOLUCION\prueba_streamlit.py
+
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import json
 import time
@@ -20,13 +24,13 @@ st.title("📡 Dashboard IoT – Sensor Network")
 # CHAT DE MENSAJES
 # ============================================================
 
-st.subheader("📨 Log de mensajes (JSON)")
+st.subheader("💬 Mensajes (chat)")
 
 if st.button("🗑️ Limpiar mensajes RAW"):
     open(FILE_RAW, "w").close()
     st.experimental_rerun()
 
-# Leer mensajes JSONL
+# Leer JSONL
 messages = []
 if os.path.exists(FILE_RAW):
     with open(FILE_RAW, "r", encoding="utf-8") as f:
@@ -36,29 +40,52 @@ if os.path.exists(FILE_RAW):
             except:
                 pass
 
-messages = messages[::-1]  # recientes primero
+messages = messages[::-1]
 
-# Ventana scroll simple sin estilos
-scroll_html = """
+def color_from_id(sensor_id):
+    h = int(hashlib.md5(sensor_id.encode()).hexdigest(), 16)
+    r = (h >> 16) & 255
+    g = (h >> 8) & 255
+    b = h & 255
+    return f"rgba({r%200},{g%200},{b%200},0.85)"
+
+# Construir HTML completo
+html_chat = """
 <div style="
     height:350px;
     overflow-y:auto;
     padding:10px;
-    background-color:#222;
-    border:1px solid #555;
-    border-radius:8px;
+    background:#111;
+    border-radius:10px;
+    border:1px solid #444;
     color:white;
     font-family:monospace;
 ">
 """
 
-for msg in messages[:100]:
-    pretty = json.dumps(msg, indent=2, ensure_ascii=False).replace("\n", "<br>")
-    scroll_html += f"{pretty}<hr style='border-color:#444;'>"
+for msg in messages[:80]:
+    sensor = msg.get("ID", "UNKNOWN")
+    color = color_from_id(sensor)
+    pretty = json.dumps(msg, indent=2, ensure_ascii=False).replace("\n", "<br>").replace(" ", "&nbsp;")
 
-scroll_html += "</div>"
+    html_chat += f"""
+    <div style="
+        background:{color};
+        padding:12px;
+        margin-bottom:12px;
+        border-radius:12px;
+        box-shadow:0 0 6px rgba(0,0,0,0.4);
+        color:black;
+    ">
+        <strong>{sensor}</strong><br>
+        <div style="margin-top:5px;">{pretty}</div>
+    </div>
+    """
 
-st.markdown(scroll_html, unsafe_allow_html=True)
+html_chat += "</div>"
+
+# MOSTRAR HTML SIN ESCAPAR
+components.html(html_chat, height=400, scrolling=True)
 
 
 # ============================================================

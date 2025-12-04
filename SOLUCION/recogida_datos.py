@@ -1,3 +1,6 @@
+#Ejecutar después de arduino
+
+
 import json
 import paho.mqtt.client as mqtt
 import pandas as pd
@@ -7,8 +10,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_RAW = os.path.join(BASE_DIR, "messages_raw.jsonl")
 FILE_GRAPH = os.path.join(BASE_DIR, "mqtt_data.csv")
 
-BROKER = "localhost"
-TOPIC = "EnviromentalSensorsNetwork"
+BROKER = "192.168.0.88"
+TOPIC = "Enviromental Sensors Network"
 
 # Crear archivos si no existen
 if not os.path.exists(FILE_RAW):
