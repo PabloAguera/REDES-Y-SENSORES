@@ -26,14 +26,14 @@
 // CONFIGURACIÓN WIFI / MQTT
 // ============================================================
 
-const char* ssid     = "iPhone";
-const char* password = "aguera38";
+const char* ssid     = "LunarLink";
+const char* password = "11223344";
 
-const char* mqtt_server = "localhost";  // <-- CAMBIAR por tu servidor MQTT
+const char* mqtt_server = "192.168.0.88";  // <-- CAMBIAR por tu servidor MQTT
 const int mqtt_port = 1883;
 
 const char* TOPIC_TIME = "TimeNow";
-const char* TOPIC_SENSORS = "EnviromentalSensorsNetwork";
+const char* TOPIC_SENSORS = "Enviromental Sensors Network";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
